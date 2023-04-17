@@ -1,6 +1,7 @@
 import cv2
 import glob
 
+#read all files that end with .jpg
 images = glob.glob("*.jpg")
 
 for img in images:
