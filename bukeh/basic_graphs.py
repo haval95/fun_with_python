@@ -18,4 +18,5 @@ y = df["y"]
 f1 = figure()
 f1.line(x,y)
 show(f1)
+print(x)
 
