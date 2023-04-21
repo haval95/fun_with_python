@@ -50,7 +50,6 @@ def delete(id):
 
 
 def update(id, title, author, year, ISBN):
-    print(id, title, author, year, ISBN)
     conn = sql3.connect("bookstore.db")
     cur = conn.cursor()
     data = cur.execute(
@@ -63,4 +62,5 @@ def update(id, title, author, year, ISBN):
 
 
 create_table()
+
 
