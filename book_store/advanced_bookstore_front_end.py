@@ -1,12 +1,6 @@
 import tkinter as tk
 import advanced_bookstore_backend as back
 
-#
-# print(view())
-# print(Serach(title="clean code"))
-# update(2, "clean arch", "azhy", 2000,254564)
-# print(view())
-
 
 def send_data():
     if title.get():
@@ -43,24 +37,39 @@ def serachData():
         result_list.insert(tk.END, row)
 
 
-def get_selected_row(event = ''):
-    index = result_list.curselection()[0]
-    selected_tuple = result_list.get(index)
-    clear_entry()
-    title.insert(tk.END, selected_tuple[1])
-    author.insert(tk.END, selected_tuple[2])
-    year.insert(tk.END, selected_tuple[3])
-    isbn.insert(tk.END, selected_tuple[4])
-    return selected_tuple[0]
+def get_selected_row(event=""):
+    try:
+        global selected_tuple
+        index = result_list.curselection()[0]
+        selected_tuple = result_list.get(index)
+        clear_entry()
+        title.insert(tk.END, selected_tuple[1])
+        author.insert(tk.END, selected_tuple[2])
+        year.insert(tk.END, selected_tuple[3])
+        isbn.insert(tk.END, selected_tuple[4])
+    except Index:
+        return
 
 
 def deleteData():
-    back.delete(get_selected_row())
+    back.delete(selected_tuple[0])
     clear_entry()
     showData()
 
 
+def updateData():
+    back.update(
+        selected_tuple[0],
+        title_value.get(),
+        author_value.get(),
+        year_value.get(),
+        isbn_value.get(),
+    )
+    showData()
+
+
 window = tk.Tk()
+window.title("BOOK DATABASE")
 
 
 frame = tk.Frame(window, padx=10, pady=10)
@@ -105,9 +114,9 @@ result_list.bind("<<ListboxSelect>>", get_selected_row)
 viewAll = tk.Button(frame, text="view All", width=20, command=showData)
 searchEntry = tk.Button(frame, text="Search Entry", width=20, command=serachData)
 addData = tk.Button(frame, text="Add Data", width=20, command=send_data)
-updateSelected = tk.Button(frame, text="Update Selected", width=20, command=send_data)
+updateSelected = tk.Button(frame, text="Update Selected", width=20, command=updateData)
 deleteSelected = tk.Button(frame, text="Delete Selected", width=20, command=deleteData)
-close = tk.Button(frame, text="Close", width=20, command=send_data)
+close = tk.Button(frame, text="Close", width=20, command=window.destroy)
 
 
 viewAll.grid(row=3, padx=10, column=3)
